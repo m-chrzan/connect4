@@ -7,9 +7,9 @@ class Board
     end
 
     def drop column, player
-        if !(1..7).include? column
-            raise ColumnOutOfBoard
-        end
+        raise ColumnOutOfBoard if !(1..7).include? column
+        raise ColumnFilled if @columns[column - 1].size >= 6
+
         @columns[column - 1].push(player)
         @pieces += 1
     end
@@ -20,4 +20,7 @@ class Board
 end
 
 class ColumnOutOfBoard < StandardError
+end
+
+class ColumnFilled < StandardError
 end

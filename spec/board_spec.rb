@@ -73,6 +73,26 @@ describe Board do
                 expect(board.columns[6].size).to eq 2
             end
         end
+
+        context "after dropping 6 pieces in column 1" do
+            let(:board) do
+                b = Board.new
+                6.times { b.drop(1, :player1) }
+                b
+            end
+
+            it "is not filled" do
+                expect(board).to_not be_filled
+            end
+
+            it "has 6 pieces in column 1" do
+                expect(board.columns[0].size).to eq 6
+            end
+
+            it "cannot have another piece dropped in column 1" do
+                expect { board.drop(1, :player1) }.to raise_error ColumnFilled
+            end
+        end
     end
 
     describe "#filled?" do
