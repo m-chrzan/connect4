@@ -125,4 +125,59 @@ describe Board do
         end
     end
 
+    describe "#get_row_col_diags" do
+        context "when called on an empty column" do
+            it "returns strings without 1s or 2s" do
+                board.get_row_col_diags(2).each do |sequence|
+                    expect(sequence).to match /^[^12]*$/
+                end
+            end
+        end
+
+        context "when called on a board with a single piece" do
+            let(:board) do
+                b = Board.new
+                b.drop(2, :player1)
+                b
+            end
+
+            it "includes that piece in each string" do
+                board.get_row_col_diags(2).each do |sequence|
+                    expect(sequence).to match /^[^12]*1[^12]*/
+                end
+            end
+        end
+
+        context "when called on a board with several pieces" do
+            let(:board) do
+                b = Board.new                            #       #
+                b.drop(2, :player2)                      #       #
+                b.drop(3, :player2)                      #   1   #
+                (4..6).each { |c| b.drop(c, :player1) }  #   1 2 #
+                (3..6).each { |c| b.drop(c, :player2) }  #  2222 #
+                b.drop(4, :player1)                      # 22111 #
+                b.drop(4, :player1)
+                b.drop(6, :player2)
+                b
+            end
+
+            it "works for a pinnacle piece" do
+                expect(board.get_row_col_diags(4)).to match_array(
+                    ["0001000", "1211", "0001020", "0001000"]
+                )
+            end
+
+            it "works for a bottom edge piece" do
+                expect(board.get_row_col_diags(2)).to match_array(
+                    ["0221110", "2", "0200000", "0221000"]
+                )
+            end
+
+            it "works for an edge peak" do
+                expect(board.get_row_col_diags(6)).to match_array(
+                    ["0001020", "122", "0000020", "0001220"]
+                )
+            end
+        end
+    end
 end
