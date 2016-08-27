@@ -1,3 +1,11 @@
+class Game
+    attr_reader :status, :current_player
+
+    def initialize
+        @status = :continue
+        @current_player = :player1
+    end
+end
 class Board
     attr_reader :columns
 

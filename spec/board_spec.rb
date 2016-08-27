@@ -4,7 +4,6 @@ def board_empty? board
     board.columns.all? &:empty?
 end
 
-
 describe Board do
     let(:board) { Board.new }
 
@@ -178,6 +177,20 @@ describe Board do
                     ["0001020", "122", "0000020", "0001220"]
                 )
             end
+        end
+    end
+end
+
+describe Game do
+    let(:game) { Game.new }
+
+    context "when initialized" do
+        it "has not ended" do
+            expect(game.status).to eq :continue
+        end
+
+        it "is player 1's turn" do
+            expect(game.current_player).to eq :player1
         end
     end
 end
