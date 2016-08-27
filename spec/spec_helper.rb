@@ -19,6 +19,7 @@
 RSpec.configure do |config|
 
     config.failure_color = :magenta
+    config.default_formatter = 'doc'
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -82,7 +83,6 @@ RSpec.configure do |config|
     # Use the documentation formatter for detailed output,
     # unless a formatter has already been configured
     # (e.g. via a command-line flag).
-    config.default_formatter = 'doc'
   end
 
   # Print the 10 slowest examples and example groups at the
